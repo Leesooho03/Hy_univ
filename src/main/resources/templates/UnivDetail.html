@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel = "stylesheet" type="text/css" th:href = "@{/assets/css/bootstrap.min.css}">
+    <style>
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            display: inline-block;
+            width: 200px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="date"] {
+            width: 200px;
+        }
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<form action="/insertDtl.do">
+    <div th:each="data : ${univDetail}">
+        <div style="display: none">
+            <label for="univ_id">id</label>
+            <input type="text" th:value="${data.univ_id}" id="univ_id" name="univ_id">
+        </div>
+        <div class="form-group">
+            <label for="univ_name">대학명:</label>
+            <input type="text" th:value="${data.univ_name}" id="univ_name" name="univ_name">
+        </div>
+        <div class="form-group">
+            <label for="univ_country">국가:</label>
+            <input type="text" th:value="${data.univ_country}" id="univ_country" name="univ_country">
+        </div>
+        <div class="form-group">
+        <label for="univ_lang">언어 : </label>
+            <input type="text" th:value = "${data.univ_lang}" id="univ_lang" name="univ_lang">
+        </div>
+        <div class="form-group">
+        <label for = "univ_score">학제 : </label>
+            <input type="text" th:value = "${data.univ_score}" id="univ_score" name="univ_score">
+        </div>
+        <div class="form-group">
+            <label for="univ_to_2024">배정TO(2024)</label>
+            <input type="text" th:value="${data.univ_to_2024}" id="univ_to_2024" name="univ_to_2024">
+        </div>
+        <div class="form-group">
+            <label for="univ_to_2025">배정TO(2025)</label>
+            <input type="text" th:value="${data.univ_to_2025}" id="univ_to_2025" name="univ_to_2025">
+        </div>
+        <div class="form-group">
+        <label for="univ_web">웹사이트</label>
+            <input type="text" th:value="${data.univ_web}" id="univ_web" name="univ_web">
+        </div>
+        <div class="form-group">
+        <label for="univ_limit_date">파견기간</label>
+            <input type="text" th:value="${data.univ_limit_date}" id="univ_limit_date" name="univ_limit_date">
+        </div>
+        <div class="form-group">
+        <label for="remark">비고</label>
+            <input type="text" th:value="${data.remark}" id="remark" name="remark">
+        </div>
+        <div class="form-group">
+        <label for="univ_cant">수강불가학과</label>
+            <input type="text" th:value="${data.univ_cant}" id="univ_cant" name="univ_cant">
+        </div>
+        <div class="form-group">
+        <label for="univ_eng">어학수업 제공여부</label>
+            <input type="radio" id="univ_eng" name="univ_eng" th:checked="${data.univ_eng == 'Y'}" value="Y"><label for="univ_eng">O</label>
+            <input type="radio" id="univ_eng_x" name="univ_eng" th:checked="${data.univ_eng == 'N'}" value="N"><label for="univ_eng_x">X</label>        </div>
+        <div class="form-group">
+        <label for="univ_min">최소 수강 가능 학점</label>
+            <input type="text" th:value="${data.univ_min}" id="univ_min" name="univ_min">
+        </div>
+        <div class="form-group">
+        <label for="univ_max">최대 수강 가능 학점</label>
+            <input type="text" th:value="${data.univ_max}" id="univ_max" name="univ_max">
+        </div>
+        <div class="form-group">
+        <label for="class_etc">기타 참고사항</label>
+            <input type="text" th:value="${data.class_etc}" id="class_etc" name="class_etc">
+        </div>
+        <div class="form-group">
+        <label for="class_link">수업 참고링크</label>
+            <input type="text" th:value="${data.class_link}" id="class_link" name="class_link">
+        </div>
+        <div class="form-group">
+        <label for="univ_master">석사 가능여부</label>
+            <input type="radio" id="univ_master" name="univ_master" th:checked="${data.univ_master == 'Y'}" value="Y"><label for="univ_master">O</label>
+            <input type="radio" id="univ_master_x" name="univ_master" th:checked="${data.univ_master == 'N'}" value="N"><label for="univ_master_x">X</label>        </div>
+        <div class="form-group">
+        <label for="univ_limit">국적제한</label>
+            <input type="text" th:value="${data.univ_limit}" id="univ_limit" name="univ_limit">
+        </div>
+        <div class="form-group">
+        <label for="univ_leave">직전학기 휴학가능여부</label>
+            <input type="radio" id="univ_leave" name="univ_leave" th:checked="${data.univ_leave == 'Y'}" value="Y"><label for="univ_leave">O</label>
+            <input type="radio" id="univ_leave_x" name="univ_leave" th:checked="${data.univ_leave == 'N'}" value="N"><label for="univ_leave_x">X</label>
+        </div>
+        <div class="form-group">
+        <label for="univ_gpa">gpa</label>
+            <input type="text" th:value="${data.univ_gpa}" id="univ_gpa" name="univ_gpa">
+        </div>
+        <div class="form-group">
+        <label for="univ_toefl_ibt">toefl_ibt</label>
+            <input type="text" th:value="${data.univ_toefl_ibt}" id="univ_toefl_ibt" name="univ_toefl_ibt">
+        </div>
+        <div class="form-group">
+        <label for="univ_toefl_itp">toefl_itp</label>
+            <input type="text" th:value="${data.univ_toefl_itp}" id="univ_toefl_itp" name="univ_toefl_itp">
+        </div>
+        <div class="form-group">
+        <label for="univ_ielts">ielts</label>
+            <input type="text" th:value="${data.univ_ielts}" id="univ_ielts" name="univ_ielts">
+        </div>
+        <div class="form-group">
+        <label for="univ_toeic">toeic</label>
+            <input type="text" th:value="${data.univ_toeic}" id="univ_toeic" name="univ_toeic">
+        </div>
+        <div class="form-group">
+        <label for="etc">기타</label>
+            <input type="text" th:value="${data.etc}" id="etc" name="etc">
+        </div>
+        <div class="form-group">
+        <label for="program_link">프로그램 참고링크</label>
+            <input type="text" th:value="${data.program_link}" id="program_link" name="program_link">
+        </div>
+        <div class="form-group">
+        <label for="sch_start">개강일</label>
+            <input type="date" th:value="${data.sch_start}" id="sch_start" name="sch_start">
+        </div>
+        <div class="form-group">
+        <label for="sch_end">종강일</label>
+            <input type="date" th:value="${data.sch_end}" id="sch_end" name="sch_end">
+        </div>
+        <div class="form-group">
+        <label for="sch_vacation">방학</label>
+            <input type="text" th:value="${data.sch_vacation}" id="sch_vacation" name="sch_vacation">
+        </div>
+        <div class="form-group">
+        <label for="sch_nomi_end">노미네이션 마감일</label>
+            <input type="date" th:value="${data.sch_nomi_end}" id="sch_nomi_end" name="sch_nomi_end">
+        </div>
+        <div class="form-group">
+        <label for="sch_app_end">어플리케이션 마감일</label>
+            <input type="date" th:value="${data.sch_app_end}" id="sch_app_end" name="sch_app_end">
+        </div>
+        <div class="form-group">
+        <label for="campus_on">기숙사(campus_on)</label>
+        <input type="radio" id="campus_on" name="campus_on" th:checked="${data.campus_on == 'Y'}" value="Y"><label for="campus_on">O</label>
+        <input type="radio" id="campus_on_x" name="campus_on" th:checked="${data.campus_on == 'N'}" value="N"><label for="campus_on_x">X</label>
+        </div>
+        <div class="form-group">
+        <label for="campus_off">기숙사(campus_off)</label>
+        <input type="radio" id="campus_off" name="campus_off" th:checked="${data.campus_off == 'Y'}" value="Y"><label for="campus_off">O</label>
+        <input type="radio" id="campus_off_x" name="campus_off" th:checked="${data.campus_off == 'N'}" value="N"><label for="campus_off_x">X</label>
+        </div>
+        <input type="submit" value="등록">
+    </div>
+</form>
+</body>
+</html>

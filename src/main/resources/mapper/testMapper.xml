@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="testMapper">
+    <select id="getUnivList" resultType="com.hy.univ.main.MainVO">
+        SELECT * FROM univ_comm
+        limit #{start}, #{pageSize}
+    </select>
+    <select id="getUnivTotal" parameterType="com.hy.univ.main.MainVO" resultType="int">
+            select count(*) from univ_comm
+    </select>
+    <select id="getUnivDtl" parameterType="String" resultType="com.hy.univ.main.MainVO">
+        SELECT *
+        FROM univ_comm a
+                 LEFT JOIN univ_class b ON a.univ_id = b.univ_id
+                 LEFT JOIN univ_dtl c ON a.univ_id = c.univ_id
+                 LEFT JOIN univ_dormitory d ON a.univ_id = d.univ_id
+                 LEFT JOIN univ_schedule e ON a.univ_id = e.univ_id
+        WHERE a.univ_id = #{univId}
+    </select>
+    <insert id="insertDtl" parameterType="com.hy.univ.main.MainVO">
+        insert into univ_class values (#{univ_id},#{univ_cant}, #{univ_eng}, #{univ_min}, #{univ_max}, #{class_etc}, #{class_link});
+        insert into univ_dormitory values (#{univ_id}, #{campus_on}, #{campus_off});
+        insert into univ_dtl values (#{univ_id}, #{univ_master}, #{univ_limit}, #{univ_leave}, #{univ_gpa}, #{univ_toefl_ibt}, #{univ_toefl_itp}, #{univ_ielts}, #{univ_toeic}, #{etc}, #{program_link});
+        insert into univ_schedule values (#{univ_id}, #{sch_start}, #{sch_end}, #{sch_vacation}, #{sch_nomi_end}, #{sch_app_end});
+
+    </insert>
+</mapper>
