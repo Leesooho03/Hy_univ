@@ -17,4 +17,9 @@ public class DtlServiceImpl implements DtlService {
     public void insertDtl(MainVO vo) throws Exception {
         dtlDAO.insertDtl(vo);
     }
+
+    @Override
+    public void updateDtl(MainVO mVO) {
+        dtlDAO.updateDtl(mVO);
+    }
 }

@@ -42,6 +42,8 @@ public class MainVO implements Serializable {
     private String sch_nomi_end = "";
     private String sch_app_end = "";
     private String detailUrl = "";
+    private String univ_rank = "";
+
 
 
     private int pg = 1;

@@ -20,4 +20,8 @@ public class DtlDAO {
     public void insertDtl(MainVO vo) throws Exception {
         sql.insert("testMapper.insertDtl", vo);
     }
+
+    public void updateDtl(MainVO mVO) {
+        sql.update("testMapper.updateDtl", mVO);
+    }
 }

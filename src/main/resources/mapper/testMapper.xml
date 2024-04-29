@@ -5,6 +5,7 @@
 <mapper namespace="testMapper">
     <select id="getUnivList" resultType="com.hy.univ.main.MainVO">
         SELECT * FROM univ_comm
+#         ORDER BY CAST(univ_rank AS UNSIGNED) ASC
         limit #{start}, #{pageSize}
     </select>
     <select id="getUnivTotal" parameterType="com.hy.univ.main.MainVO" resultType="int">
@@ -26,4 +27,46 @@
         insert into univ_schedule values (#{univ_id}, #{sch_start}, #{sch_end}, #{sch_vacation}, #{sch_nomi_end}, #{sch_app_end});
 
     </insert>
+    <update id="updateDtl" parameterType="com.hy.univ.main.MainVO">
+        update univ_class
+        set univ_cant = #{univ_cant},
+        univ_eng = #{univ_eng},
+        univ_min = #{univ_min},
+        univ_max = #{univ_max},
+        class_etc = #{class_etc},
+        class_link = #{class_link}
+        where univ_id = #{univ_id};
+
+        update univ_comm
+        set univ_rank = #{univ_rank}
+        where univ_id = #{univ_id};
+
+        update univ_dormitory
+        set campus_on = #{campus_on},
+        campus_off = #{campus_off}
+        where univ_id = #{univ_id};
+
+        update univ_dtl
+        set univ_master = #{univ_master},
+        univ_limit = #{univ_limit},
+        univ_leave = #{univ_leave},
+        univ_gpa = #{univ_gpa},
+        univ_toefl_ibt = #{univ_toefl_ibt},
+        univ_toefl_itp = #{univ_toefl_itp},
+        univ_ielts = #{univ_ielts},
+        univ_toeic = #{univ_toeic},
+        etc = #{etc},
+        program_link = #{program_link}
+        where univ_id = #{univ_id};
+
+        update univ_schedule
+        set sch_start = #{sch_start},
+        sch_end = #{sch_end},
+        sch_vacation = #{sch_vacation},
+        sch_nomi_end = #{sch_nomi_end},
+        sch_app_end = #{sch_app_end}
+        where univ_id = #{univ_id};
+    </update>
+
+
 </mapper>

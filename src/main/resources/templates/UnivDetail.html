@@ -5,24 +5,43 @@
     <title>Title</title>
     <link rel = "stylesheet" type="text/css" th:href = "@{/assets/css/bootstrap.min.css}">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            text-align: center;
+        }
+
         .form-group {
-            margin-bottom: 10px;
+            flex: 0 0 48%;
+            width: 30%;
+            display: inline-block;
         }
         .form-group label {
             display: inline-block;
             width: 200px;
+            font-weight: bold;
+            float: left;
         }
         .form-group input[type="text"],
         .form-group input[type="date"] {
-            width: 200px;
+            width: calc(100% - 210px); /* 인풋 박스의 너비를 조정 */
+            padding: 5px;
         }
         .form-group input[type="radio"] {
-            margin-right: 10px;
+            margin-right: 5px;
+            width: auto; /* 라디오 버튼 내의 input 요소의 너비를 자동으로 조정 */
+        }
+        .inst_btn, button{
+
         }
     </style>
 </head>
 <body>
-<form action="/insertDtl.do">
+<form id="dtlForm" action="/insertDtl.do">
     <div th:each="data : ${univDetail}">
         <div style="display: none">
             <label for="univ_id">id</label>
@@ -31,6 +50,10 @@
         <div class="form-group">
             <label for="univ_name">대학명:</label>
             <input type="text" th:value="${data.univ_name}" id="univ_name" name="univ_name">
+        </div>
+        <div class="form-group">
+            <label for="univ_rank">순위:</label>
+            <input type="text" th:value="${data.univ_rank}" id="univ_rank" name="univ_rank">
         </div>
         <div class="form-group">
             <label for="univ_country">국가:</label>
@@ -70,8 +93,8 @@
         </div>
         <div class="form-group">
         <label for="univ_eng">어학수업 제공여부</label>
-            <input type="radio" id="univ_eng" name="univ_eng" th:checked="${data.univ_eng == 'Y'}" value="Y"><label for="univ_eng">O</label>
-            <input type="radio" id="univ_eng_x" name="univ_eng" th:checked="${data.univ_eng == 'N'}" value="N"><label for="univ_eng_x">X</label>        </div>
+            <input type="radio" id="univ_eng" name="univ_eng" th:checked="${data.univ_eng == 'Y'}" value="Y"><label for="univ_eng" style="width: auto; float: none">O</label>
+            <input type="radio" id="univ_eng_x" name="univ_eng" th:checked="${data.univ_eng == 'N'}" value="N"><label for="univ_eng_x" style="width: auto; float: none">X</label>        </div>
         <div class="form-group">
         <label for="univ_min">최소 수강 가능 학점</label>
             <input type="text" th:value="${data.univ_min}" id="univ_min" name="univ_min">
@@ -90,16 +113,16 @@
         </div>
         <div class="form-group">
         <label for="univ_master">석사 가능여부</label>
-            <input type="radio" id="univ_master" name="univ_master" th:checked="${data.univ_master == 'Y'}" value="Y"><label for="univ_master">O</label>
-            <input type="radio" id="univ_master_x" name="univ_master" th:checked="${data.univ_master == 'N'}" value="N"><label for="univ_master_x">X</label>        </div>
+            <input type="radio" id="univ_master" name="univ_master" th:checked="${data.univ_master == 'Y'}" value="Y"><label for="univ_master" style="width:auto; float: none">O</label>
+            <input type="radio" id="univ_master_x" name="univ_master" th:checked="${data.univ_master == 'N'}" value="N"><label for="univ_master_x" style="width: auto; float: none">X</label>        </div>
         <div class="form-group">
         <label for="univ_limit">국적제한</label>
             <input type="text" th:value="${data.univ_limit}" id="univ_limit" name="univ_limit">
         </div>
         <div class="form-group">
         <label for="univ_leave">직전학기 휴학가능여부</label>
-            <input type="radio" id="univ_leave" name="univ_leave" th:checked="${data.univ_leave == 'Y'}" value="Y"><label for="univ_leave">O</label>
-            <input type="radio" id="univ_leave_x" name="univ_leave" th:checked="${data.univ_leave == 'N'}" value="N"><label for="univ_leave_x">X</label>
+            <input type="radio" id="univ_leave" name="univ_leave" th:checked="${data.univ_leave == 'Y'}" value="Y"><label for="univ_leave" style="width: auto; float: none">O</label>
+            <input type="radio" id="univ_leave_x" name="univ_leave" th:checked="${data.univ_leave == 'N'}" value="N"><label for="univ_leave_x" style="width: auto; float: none">X</label>
         </div>
         <div class="form-group">
         <label for="univ_gpa">gpa</label>
@@ -151,16 +174,23 @@
         </div>
         <div class="form-group">
         <label for="campus_on">기숙사(campus_on)</label>
-        <input type="radio" id="campus_on" name="campus_on" th:checked="${data.campus_on == 'Y'}" value="Y"><label for="campus_on">O</label>
-        <input type="radio" id="campus_on_x" name="campus_on" th:checked="${data.campus_on == 'N'}" value="N"><label for="campus_on_x">X</label>
+        <input type="radio" id="campus_on" name="campus_on" th:checked="${data.campus_on == 'Y'}" value="Y"><label for="campus_on" style="width: auto; float: none">O</label>
+        <input type="radio" id="campus_on_x" name="campus_on" th:checked="${data.campus_on == 'N'}" value="N"><label for="campus_on_x" style="width: auto; float: none">X</label>
         </div>
         <div class="form-group">
         <label for="campus_off">기숙사(campus_off)</label>
-        <input type="radio" id="campus_off" name="campus_off" th:checked="${data.campus_off == 'Y'}" value="Y"><label for="campus_off">O</label>
-        <input type="radio" id="campus_off_x" name="campus_off" th:checked="${data.campus_off == 'N'}" value="N"><label for="campus_off_x">X</label>
+        <input type="radio" id="campus_off" name="campus_off" th:checked="${data.campus_off == 'Y'}" value="Y"><label for="campus_off" style="width: auto; float: none">O</label>
+        <input type="radio" id="campus_off_x" name="campus_off" th:checked="${data.campus_off == 'N'}" value="N"><label for="campus_off_x" style="width: auto; float: none">X</label>
         </div>
-        <input type="submit" value="등록">
     </div>
+        <input class="inst_btn" type="submit" value="등록">
+        <button type="button" onclick="updateData()">수정</button>
 </form>
+<script>
+    function updateData() {
+        document.getElementById('dtlForm').action = '/updateDtl.do';
+        document.getElementById('dtlForm').submit();
+    }
+</script>
 </body>
 </html>
