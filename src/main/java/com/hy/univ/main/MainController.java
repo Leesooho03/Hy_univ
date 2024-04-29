@@ -27,6 +27,7 @@ public class MainController {
         model.addAttribute("totalPageCount", totalPageCount);
         model.addAttribute("startIdx", startIdx);
         model.addAttribute("pg", pg);
+        model.addAttribute("recordCountPerPage", recordCountPerPage);
         return "UnivList";
     }
 

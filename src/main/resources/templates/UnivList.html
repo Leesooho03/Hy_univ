@@ -28,19 +28,21 @@
 <link rel = "stylesheet" type="text/css" th:href = "@{/assets/css/bootstrap.min.css}">
 <table>
     <tr>
+        <th>순번</th>
         <th>이름</th>
         <th>국가</th>
         <th>언어</th>
         <th>학제</th>
     </tr>
-    <tr th:each="univ : ${univList}">
+    <tr th:each="univ, index : ${univList}">
+        <td th:text="${(pg - 1) * recordCountPerPage + index.index + 1}"></td>
         <td><a th:href="@{/univDtl.do(univ_id=${univ.univ_id})}" th:text="${univ.univ_name}"></a></td>
         <td th:text="${univ.univ_country}"></td>
         <td th:text="${univ.univ_lang}"></td>
         <td th:text="${univ.univ_score}"></td>
     </tr>
 </table>
-<nav aria-label="Page navigation example">
+<nav aria-label="Page navigation">
     <ul class="pagination">
         <li class="page-item">
             <a class="page-link" th:href="@{'/univList.do?pg=' + ${pg - 1 > 0 ? pg - 1 : 1}}">Previous</a>
@@ -53,6 +55,8 @@
         </li>
     </ul>
 </nav>
+
+
 
 </body>
 </html>
