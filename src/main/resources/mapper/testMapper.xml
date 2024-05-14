@@ -4,12 +4,31 @@
 
 <mapper namespace="testMapper">
     <select id="getUnivList" resultType="com.hy.univ.main.MainVO">
-        SELECT * FROM univ_comm
-#         ORDER BY CAST(univ_rank AS UNSIGNED) ASC
+        select * from univ_comm
+        where 1=1
+        <if test="searchKeyword != null">
+            and univ_name like CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        <if test="s_country != null and s_country != ''">
+            and univ_country = #{s_country}
+        </if>
+        <if test="s_lang != null and s_lang != ''">
+            and univ_lang = #{s_lang}
+        </if>
         limit #{start}, #{pageSize}
     </select>
     <select id="getUnivTotal" parameterType="com.hy.univ.main.MainVO" resultType="int">
             select count(*) from univ_comm
+            where 1=1
+            <if test="searchKeyword!=null">
+                and univ_name like concat('%', #{searchKeyword}, '%')
+            </if>
+        <if test="s_country != null and s_country != ''">
+            and univ_country = #{s_country}
+        </if>
+        <if test="s_lang != null and s_lang != ''">
+            and univ_lang = #{s_lang}
+        </if>
     </select>
     <select id="getUnivDtl" parameterType="String" resultType="com.hy.univ.main.MainVO">
         SELECT *
@@ -68,5 +87,15 @@
         where univ_id = #{univ_id};
     </update>
 
+    <select id="getCountry" resultType="com.hy.univ.main.MainVO">
+        select DISTINCT(univ_country) from univ_comm
+    </select>
+    <select id="getLang" resultType="com.hy.univ.main.MainVO">
+        select DISTINCT(univ_lang) from univ_comm
+    </select>
 
+    <insert id="gptInsert">
+        insert into gpt(gpt_q, gpt_a)
+        values (#{prompt}, #{responseBody})
+    </insert>
 </mapper>

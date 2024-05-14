@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
+import static ch.qos.logback.core.joran.JoranConstants.NULL;
+
 @Controller
 public class DtlController {
     @Autowired
@@ -89,6 +91,18 @@ public class DtlController {
         mVO.setSch_vacation(map.get("sch_vacation").toString());
         mVO.setSch_nomi_end(map.get("sch_nomi_end").toString());
         mVO.setSch_app_end(map.get("sch_app_end").toString());
+        if ("".equals(map.get("sch_start"))) {
+            mVO.setSch_start(null);
+        }
+        if ("".equals(map.get("sch_end"))) {
+            mVO.setSch_end(null);
+        }
+        if ("".equals(map.get("sch_nomi_end"))) {
+            mVO.setSch_nomi_end(null);
+        }
+        if ("".equals(map.get("sch_app_end"))) {
+            mVO.setSch_app_end(null);
+        }
         dtlService.updateDtl(mVO);
         return "redirect:/univDtl.do?univ_id=" + map.get("univ_id").toString();
     }

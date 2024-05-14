@@ -36,15 +36,17 @@ public class MainVO implements Serializable {
     private String class_etc = "";
     private String campus_on = "";
     private String campus_off = "";
-    private String sch_start = "";
-    private String sch_end = "";
-    private String sch_vacation = "";
-    private String sch_nomi_end = "";
-    private String sch_app_end = "";
+    private String sch_start = null;
+    private String sch_end = null;
+    private String sch_vacation = null;
+    private String sch_nomi_end = null;
+    private String sch_app_end = null;
     private String detailUrl = "";
     private String univ_rank = "";
 
 
+    private String search = "";
+    private String searchKeyword = "";
 
     private int pg = 1;
     private int recordCountPerPage = 15;
