@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        /* 채팅 메시지 스타일 */
+        .message-container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 10px;
+            overflow: auto; /* 내용이 넘칠 때 스크롤바 표시 */
+            max-height: 70%; /* 최대 높이 설정 */
+        }
+
+        .user-message, .other-message {
+            padding: 8px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            word-wrap: break-word; /* 긴 문장일 때 줄바꿈 */
+            width: 30%;
+        }
+
+        .user-message {
+            background-color: #dcf8c6;
+            text-align: right;
+            float: right;
+        }
+
+        .other-message {
+            background-color: #ffffff;
+            text-align: left;
+        }
+
+        /* 채팅 입력창 스타일 */
+        .message-input {
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .send-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .message-input {
+            width: 80%;
+            margin: 20px auto;
+            display: flex; /* 입력창과 버튼을 한 줄에 나열 */
+            align-items: center; /* 내용을 수직으로 가운데 정렬 */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .message-input input[type="text"] {
+            flex: 1; /* 입력창이 버튼만큼의 공간을 차지 */
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            outline: none; /* 포커스 효과 제거 */
+            width: 90%;
+        }
+
+        .send-button {
+            padding: 10px 20px;
+            margin-left: 10px; /* 입력창과 버튼 사이 간격 조정 */
+            border: none;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s; /* 배경색 변경 시 부드러운 효과 */
+            float: right;
+        }
+
+        .send-button:hover {
+            background-color: #45a049; /* 마우스 호버 시 배경색 변경 */
+        }
+    </style>
+</head>
+<body>
+<div class="message-container">
+    <div class="other-message">안녕하세요! 어떻게 도와드릴까요?</div>
+    <div class="user-message">안녕하세요! 카카오톡처럼 꾸며주세요. 채팅 메시지가 길어지면 자동으로 줄바꿈 됩니다.</div>
+</div>
+<div class="message-input">
+    <form id="gpt" name="gpt" action="" style="width: 100%;">
+        <textarea name="quest" placeholder="메시지를 입력하세요..." style="width: 90%; height: 50px; resize: none; padding: 10px; font-size: 16px; border-radius: 10px;"></textarea>
+        <button class="send-button" onclick="question()">보내기</button>
+    </form>
+</div>
+<iframe src="http://localhost:3000"></iframe>
+<script>
+    function question(){
+        let messageInput = document.querySelector('textarea[name="quest"]');
+        let message = messageInput.value.trim();
+
+        if (message !== "") {
+            let userMessage = document.createElement("div");
+            userMessage.classList.add("user-message");
+            userMessage.textContent = message;
+
+            let messageContainer = document.querySelector(".message-container");
+            messageContainer.appendChild(userMessage);
+
+            // 스크롤을 맨 아래로 이동
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+
+            // 입력창 초기화
+            messageInput.value = "";
+        }
+        let quest = document.querySelector('textarea[name="quest"]').value;
+
+        let form = document.querySelector('form[name="gpt"]');
+        form.querySelector('input[name="quest"]').value = quest;
+
+        form.action="/ask.do"
+        form.submit();
+    }
+</script>
+</body>
+</html>
