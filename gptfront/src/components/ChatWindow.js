@@ -15,12 +15,10 @@ const ChatWindow = () => {
         addMessage(message, true);
 
         try {
-            // 첫 번째 URL로 요청을 보냅니다.
-            const firstUrlResponse = await axios.post("http://192.168.1.16:9090/ask", {
+            const firstUrlResponse = await axios.post("http://192.168.1.3:9090/ask", {
                 prompt: message,
             });
 
-            // 응답이 오면 처리하고 함수를 종료합니다.
             if (firstUrlResponse.data) {
                 addMessage(firstUrlResponse.data, false);
                 return;
@@ -30,12 +28,10 @@ const ChatWindow = () => {
         }
 
         try {
-            // 두 번째 URL로 요청을 보냅니다.
             const secondUrlResponse = await axios.post("http://localhost:9090/ask", {
                 prompt: message,
             });
 
-            // 응답이 오면 처리합니다.
             if (secondUrlResponse.data) {
                 addMessage(secondUrlResponse.data, false);
             }

@@ -1703,8 +1703,8 @@ section {
 .hero {
   width: 100%;
   min-height: 50vh;
-  background-color: var(--color-secondary);
-  background-image: url("../img/진짜배경.png");
+  background-color: #96a8ef;
+  /*background-image: url("..");*/
   background-size: cover;
   background-position: center;
   position: relative;
@@ -1776,7 +1776,7 @@ section {
   margin-bottom: 15px;
   padding-bottom: 15px;
   position: relative;
-  color: #ffffff;
+  color: #060000;
 }
 
 .hero .stats-item span:after {
@@ -1798,7 +1798,7 @@ section {
   font-family: var(--font-primary);
   font-size: 15px;
   font-weight: 600;
-  color: #ffffff;
+  color: #060000;
 }
 
 /*--------------------------------------------------------------

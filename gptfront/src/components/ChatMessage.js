@@ -10,7 +10,7 @@ const ChatMessage = ({ message, isUser }) => {
             className={`chat-message ${isUser ? "user-message" : "bot-message"}`}
             style={messageStyle}
         >
-            <p>{message}</p>
+            <pre>{message}</pre>
         </div>
     );
 };

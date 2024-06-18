@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,34 +27,7 @@ public class DtlController {
         return "UnivDetail";
     }
     @RequestMapping(value = "/insertDtl.do")
-    public String insertDtl(@RequestParam Map<String, Object> map) {
-        MainVO mVO = new MainVO();
-        mVO.setUniv_rank(map.get("univ_rank").toString());
-        mVO.setUniv_id(map.get("univ_id").toString());
-        mVO.setUniv_cant(map.get("univ_cant").toString());
-        mVO.setUniv_eng(map.get("univ_eng").toString());
-        mVO.setUniv_min(map.get("univ_min").toString());
-        mVO.setUniv_max(map.get("univ_max").toString());
-        mVO.setClass_etc(map.get("class_etc").toString());
-        mVO.setClass_link(map.get("class_link").toString());
-        mVO.setCampus_off(map.get("campus_off").toString());
-        mVO.setCampus_on(map.get("campus_on").toString());
-        mVO.setUniv_master(map.get("univ_master").toString());
-        mVO.setUniv_limit(map.get("univ_limit").toString());
-        mVO.setUniv_leave(map.get("univ_leave").toString());
-        mVO.setUniv_gpa(map.get("univ_gpa").toString());
-        mVO.setUniv_toefl_ibt(map.get("univ_toefl_ibt").toString());
-        mVO.setUniv_toefl_itp(map.get("univ_toefl_itp").toString());
-        mVO.setUniv_ielts(map.get("univ_ielts").toString());
-        mVO.setUniv_toeic(map.get("univ_toeic").toString());
-        mVO.setEtc(map.get("etc").toString());
-        mVO.setProgram_link(map.get("program_link").toString());
-        mVO.setSch_start(map.get("sch_start").toString());
-        mVO.setSch_end(map.get("sch_end").toString());
-        mVO.setSch_vacation(map.get("sch_vacation").toString());
-        mVO.setSch_nomi_end(map.get("sch_nomi_end").toString());
-        mVO.setSch_app_end(map.get("sch_app_end").toString());
-
+    public String insertDtl(@ModelAttribute("MainVO")MainVO mVO) {
         try {
             dtlService.insertDtl(mVO);
         }
@@ -64,46 +38,20 @@ public class DtlController {
         return "redirect:/univList.do";
     }
     @RequestMapping(value = "/updateDtl.do")
-    public String updateUniv(@RequestParam Map<String, Object> map) {
-        MainVO mVO = new MainVO();
-        mVO.setUniv_rank(map.get("univ_rank").toString());
-        mVO.setUniv_id(map.get("univ_id").toString());
-        mVO.setUniv_cant(map.get("univ_cant").toString());
-        mVO.setUniv_eng(map.get("univ_eng").toString());
-        mVO.setUniv_min(map.get("univ_min").toString());
-        mVO.setUniv_max(map.get("univ_max").toString());
-        mVO.setClass_etc(map.get("class_etc").toString());
-        mVO.setClass_link(map.get("class_link").toString());
-        mVO.setCampus_off(map.get("campus_off").toString());
-        mVO.setCampus_on(map.get("campus_on").toString());
-        mVO.setUniv_master(map.get("univ_master").toString());
-        mVO.setUniv_limit(map.get("univ_limit").toString());
-        mVO.setUniv_leave(map.get("univ_leave").toString());
-        mVO.setUniv_gpa(map.get("univ_gpa").toString());
-        mVO.setUniv_toefl_ibt(map.get("univ_toefl_ibt").toString());
-        mVO.setUniv_toefl_itp(map.get("univ_toefl_itp").toString());
-        mVO.setUniv_ielts(map.get("univ_ielts").toString());
-        mVO.setUniv_toeic(map.get("univ_toeic").toString());
-        mVO.setEtc(map.get("etc").toString());
-        mVO.setProgram_link(map.get("program_link").toString());
-        mVO.setSch_start(map.get("sch_start").toString());
-        mVO.setSch_end(map.get("sch_end").toString());
-        mVO.setSch_vacation(map.get("sch_vacation").toString());
-        mVO.setSch_nomi_end(map.get("sch_nomi_end").toString());
-        mVO.setSch_app_end(map.get("sch_app_end").toString());
-        if ("".equals(map.get("sch_start"))) {
+    public String updateUniv(@ModelAttribute("MainVO")MainVO mVO) {
+        if ("".equals(mVO.getSch_start())) {
             mVO.setSch_start(null);
         }
-        if ("".equals(map.get("sch_end"))) {
+        if ("".equals(mVO.getSch_end())) {
             mVO.setSch_end(null);
         }
-        if ("".equals(map.get("sch_nomi_end"))) {
+        if ("".equals(mVO.getSch_nomi_end())) {
             mVO.setSch_nomi_end(null);
         }
-        if ("".equals(map.get("sch_app_end"))) {
+        if ("".equals(mVO.getSch_app_end())) {
             mVO.setSch_app_end(null);
         }
         dtlService.updateDtl(mVO);
-        return "redirect:/univDtl.do?univ_id=" + map.get("univ_id").toString();
+        return "redirect:/univDtl.do?univ_id=" + mVO.getUniv_id().toString();
     }
 }

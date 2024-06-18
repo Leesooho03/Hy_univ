@@ -4,31 +4,70 @@
 
 <mapper namespace="testMapper">
     <select id="getUnivList" resultType="com.hy.univ.main.MainVO">
-        select * from univ_comm
+        select a.*, b.*, c.*, d.* from univ_comm a
+        left join univ_class b on a.univ_id = b.univ_id
+        left join univ_dormitory c on a.univ_id = c.univ_id
+        left join univ_dtl d on a.univ_id = d.univ_id
         where 1=1
         <if test="searchKeyword != null">
-            and univ_name like CONCAT('%', #{searchKeyword}, '%')
+            and a.univ_name like CONCAT('%', #{searchKeyword}, '%')
         </if>
         <if test="s_country != null and s_country != ''">
-            and univ_country = #{s_country}
+            and a.univ_country = #{s_country}
         </if>
         <if test="s_lang != null and s_lang != ''">
-            and univ_lang = #{s_lang}
+            and a.univ_lang = #{s_lang}
         </if>
+        <if test="univ_master != null and univ_master != ''">
+            and d.univ_master = #{univ_master}
+        </if>
+        <if test="campus_on != null and campus_on != ''">
+            and c.campus_on = #{campus_on}
+        </if>
+        <if test="campus_off != null and campus_off != ''">
+            and c.campus_off = #{campus_off}
+        </if>
+        <if test="univ_eng != null and univ_eng != ''">
+            and b.univ_eng = #{univ_eng}
+        </if>
+        <if test="univ_score != null and univ_score != ''">
+            and a.univ_score = #{univ_score}
+        </if>
+
+        order by univ_to_2024 asc
         limit #{start}, #{pageSize}
     </select>
     <select id="getUnivTotal" parameterType="com.hy.univ.main.MainVO" resultType="int">
-            select count(*) from univ_comm
+            select count(*) from univ_comm a
+            left join univ_class b on a.univ_id = b.univ_id
+            left join univ_dormitory c on a.univ_id = c.univ_id
+            left join univ_dtl d on a.univ_id = d.univ_id
             where 1=1
-            <if test="searchKeyword!=null">
-                and univ_name like concat('%', #{searchKeyword}, '%')
+            <if test="searchKeyword != null">
+                and a.univ_name like CONCAT('%', #{searchKeyword}, '%')
             </if>
-        <if test="s_country != null and s_country != ''">
-            and univ_country = #{s_country}
-        </if>
-        <if test="s_lang != null and s_lang != ''">
-            and univ_lang = #{s_lang}
-        </if>
+            <if test="s_country != null and s_country != ''">
+                and a.univ_country = #{s_country}
+            </if>
+            <if test="s_lang != null and s_lang != ''">
+                and a.univ_lang = #{s_lang}
+            </if>
+            <if test="univ_master != null and univ_master != ''">
+                and d.univ_master = #{univ_master}
+            </if>
+            <if test="campus_on != null and campus_on != ''">
+                and c.campus_on = #{campus_on}
+            </if>
+            <if test="campus_off != null and campus_off != ''">
+                and c.campus_off = #{campus_off}
+            </if>
+            <if test="univ_eng != null and univ_eng != ''">
+                and b.univ_eng = #{univ_eng}
+            </if>
+            <if test="univ_score != null and univ_score != ''">
+                and a.univ_score = #{univ_score}
+            </if>
+
     </select>
     <select id="getUnivDtl" parameterType="String" resultType="com.hy.univ.main.MainVO">
         SELECT *
@@ -98,4 +137,9 @@
         insert into gpt(gpt_q, gpt_a)
         values (#{prompt}, #{responseBody})
     </insert>
+
+    <select id="getSimple" resultType="com.hy.univ.main.MainVO" parameterType="String">
+        SELECT * from univ_comm
+        where univ_name like CONCAT('%', #{searchKeyword}, '%')
+    </select>
 </mapper>

@@ -1,12 +1,14 @@
 package com.hy.univ.main;
 
 
+import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
 public class MainVO implements Serializable {
+    @Id
     private String univ_id = "";
     private String univ_name = "";
     private String univ_country = "";

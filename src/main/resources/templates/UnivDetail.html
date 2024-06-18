@@ -10,6 +10,42 @@
             margin: 0;
             padding: 0;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f4f4f4;
+            color: #333;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        table td {
+            color: #555;
+        }
+
+        table td span {
+            font-weight: bold;
+            color: #333;
+        }
 
         form {
             text-align: center;
@@ -35,157 +71,216 @@
             margin-right: 5px;
             width: auto; /* 라디오 버튼 내의 input 요소의 너비를 자동으로 조정 */
         }
-        .inst_btn, button{
+        </style>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
 
-        }
-    </style>
-</head>
-<body>
-<form id="dtlForm" action="/insertDtl.do">
-    <div th:each="data : ${univDetail}">
-        <div style="display: none">
-            <label for="univ_id">id</label>
-            <input type="text" th:value="${data.univ_id}" id="univ_id" name="univ_id">
+        <!-- Favicons -->
+        <link href="/assets/img/favicon.png" rel="icon">
+        <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+        <link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+        <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+        <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+        <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="/assets/css/main.css" rel="stylesheet">
+
+        </head>
+
+        <body>
+
+        <header th:replace="/header::header"></header>
+        <main id="main">
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs">
+        <div class="page-header d-flex align-items-center" style="background-image: url('/assets/img/s_back.png');">
+        <div class="container position-relative">
+        <div class="row d-flex justify-content-center">
+        <div class="col-lg-6 text-center">
+        <h2>대학 세부 정보 </h2>
+        <p>선택하신 대학의 세부 정보 입니다.</p>
         </div>
-        <div class="form-group">
-            <label for="univ_name">대학명:</label>
-            <input type="text" th:value="${data.univ_name}" id="univ_name" name="univ_name">
         </div>
-        <div class="form-group">
-            <label for="univ_rank">순위:</label>
-            <input type="text" th:value="${data.univ_rank}" id="univ_rank" name="univ_rank">
         </div>
-        <div class="form-group">
-            <label for="univ_country">국가:</label>
-            <input type="text" th:value="${data.univ_country}" id="univ_country" name="univ_country">
         </div>
-        <div class="form-group">
-        <label for="univ_lang">언어 : </label>
-            <input type="text" th:value = "${data.univ_lang}" id="univ_lang" name="univ_lang">
+        <nav>
+        <div class="container">
+        <ol>
+        <li><a href="index.do">Home</a></li>
+        <li>대학 세부 정보</li>
+        </ol>
         </div>
-        <div class="form-group">
-        <label for = "univ_score">학제 : </label>
-            <input type="text" th:value = "${data.univ_score}" id="univ_score" name="univ_score">
+        </nav>
+        </div><!-- End Breadcrumbs -->
+
+        <!-- ======= Contact Section ======= -->
+        <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+            <table>
+                <tr th:each="data : ${univDetail}">
+                    <td>
+                        <table>
+                            <tr>
+                                <td>대학명</td>
+                                <td th:text="${data.univ_name}"></td>
+                                <td>순위</td>
+                                <td th:text="${data.univ_rank}"></td>
+                            </tr>
+                            <tr>
+                                <td>국가</td>
+                                <td th:text="${data.univ_country}"></td>
+                                <td>언어</td>
+                                <td th:text="${data.univ_lang}"></td>
+                            </tr>
+                            <tr>
+                                <td>학제</td>
+                                <td th:text="${data.univ_score}"></td>
+                                <td>배정TO(2024)</td>
+                                <td th:text="${data.univ_to_2024}"></td>
+                            </tr>
+                            <tr>
+                                <td>배정TO(2025)</td>
+                                <td th:text="${data.univ_to_2025}"></td>
+                                <td>웹사이트</td>
+                                <td><a th:href="${data.univ_web}" th:text="${data.univ_web}" target="_blank"></a></td>
+                            </tr>
+                            <tr>
+                                <td>파견기간</td>
+                                <td th:text="${data.univ_limit_date}"></td>
+                                <td>비고</td>
+                                <td th:text="${data.remark}"></td>
+                            </tr>
+                            <tr>
+                                <td>수강불가학과</td>
+                                <td th:text="${data.univ_cant}"></td>
+                                <td>어학수업 제공여부</td>
+                                <td>
+                                    <span th:if="${data.univ_eng == 'Y'}">O</span>
+                                    <span th:if="${data.univ_eng == 'N'}">X</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>최소 수강 가능 학점</td>
+                                <td th:text="${data.univ_min}"></td>
+                                <td>최대 수강 가능 학점</td>
+                                <td th:text="${data.univ_max}"></td>
+                            </tr>
+                            <tr>
+                                <td>기타 참고사항</td>
+                                <td th:text="${data.class_etc}"></td>
+                                <td>수업 참고링크</td>
+                               <td>
+                                <a th:href="${data.class_link}" th:text="${data.class_link}" target="_blank"></a>
+                               </td>
+                            </tr>
+                            <tr>
+                                <td>석사 가능여부</td>
+                                <td>
+                                    <span th:if="${data.univ_master == 'Y'}">O</span>
+                                    <span th:if="${data.univ_master == 'N'}">X</span>
+                                </td>
+                                <td>국적제한</td>
+                                <td th:text="${data.univ_limit}"></td>
+                            </tr>
+                            <tr>
+                                <td>직전학기 휴학가능여부</td>
+                                <td>
+                                    <span th:if="${data.univ_leave == 'Y'}">O</span>
+                                    <span th:if="${data.univ_leave == 'N'}">X</span>
+                                </td>
+                                <td>GPA</td>
+                                <td th:text="${data.univ_gpa}"></td>
+                            </tr>
+                            <tr>
+                                <td>TOEFL IBT</td>
+                                <td th:text="${data.univ_toefl_ibt}"></td>
+                                <td>TOEFL ITP</td>
+                                <td th:text="${data.univ_toefl_itp}"></td>
+                            </tr>
+                            <tr>
+                                <td>IELTS</td>
+                                <td th:text="${data.univ_ielts}"></td>
+                                <td>TOEIC</td>
+                                <td th:text="${data.univ_toeic}"></td>
+                            </tr>
+                            <tr>
+                                <td>기타</td>
+                                <td th:text="${data.etc}"></td>
+                                <td>프로그램 참고링크</td>
+                                <td><a th:href="${data.program_link}" th:text="${data.program_link}" target="_blank"></a></td>
+                            </tr>
+                            <tr>
+                                <td>개강일</td>
+                                <td th:text="${data.sch_start}"></td>
+                                <td>종강일</td>
+                                <td th:text="${data.sch_end}"></td>
+                            </tr>
+                            <tr>
+                                <td>방학</td>
+                                <td th:text="${data.sch_vacation}"></td>
+                                <td>노미네이션 마감일</td>
+                                <td th:text="${data.sch_nomi_end}"></td>
+                            </tr>
+                            <tr>
+                                <td>어플리케이션 마감일</td>
+                                <td th:text="${data.sch_app_end}"></td>
+                                <td>기숙사(campus_on)</td>
+                                <td>
+                                    <span th:if="${data.campus_on == 'Y'}">O</span>
+                                    <span th:if="${data.campus_on == 'N'}">X</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>기숙사(campus_off)</td>
+                                <td>
+                                    <span th:if="${data.campus_off == 'Y'}">O</span>
+                                    <span th:if="${data.campus_off == 'N'}">X</span>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        <div>
+
+        </div><!-- End Google Maps -->
+
+
         </div>
-        <div class="form-group">
-            <label for="univ_to_2024">배정TO(2024)</label>
-            <input type="text" th:value="${data.univ_to_2024}" id="univ_to_2024" name="univ_to_2024">
-        </div>
-        <div class="form-group">
-            <label for="univ_to_2025">배정TO(2025)</label>
-            <input type="text" th:value="${data.univ_to_2025}" id="univ_to_2025" name="univ_to_2025">
-        </div>
-        <div class="form-group">
-        <label for="univ_web">웹사이트</label>
-            <input type="text" th:value="${data.univ_web}" id="univ_web" name="univ_web">
-        </div>
-        <div class="form-group">
-        <label for="univ_limit_date">파견기간</label>
-            <input type="text" th:value="${data.univ_limit_date}" id="univ_limit_date" name="univ_limit_date">
-        </div>
-        <div class="form-group">
-        <label for="remark">비고</label>
-            <input type="text" th:value="${data.remark}" id="remark" name="remark">
-        </div>
-        <div class="form-group">
-        <label for="univ_cant">수강불가학과</label>
-            <input type="text" th:value="${data.univ_cant}" id="univ_cant" name="univ_cant">
-        </div>
-        <div class="form-group">
-        <label for="univ_eng">어학수업 제공여부</label>
-            <input type="radio" id="univ_eng" name="univ_eng" th:checked="${data.univ_eng == 'Y'}" value="Y"><label for="univ_eng" style="width: auto; float: none">O</label>
-            <input type="radio" id="univ_eng_x" name="univ_eng" th:checked="${data.univ_eng == 'N'}" value="N"><label for="univ_eng_x" style="width: auto; float: none">X</label>        </div>
-        <div class="form-group">
-        <label for="univ_min">최소 수강 가능 학점</label>
-            <input type="text" th:value="${data.univ_min}" id="univ_min" name="univ_min">
-        </div>
-        <div class="form-group">
-        <label for="univ_max">최대 수강 가능 학점</label>
-            <input type="text" th:value="${data.univ_max}" id="univ_max" name="univ_max">
-        </div>
-        <div class="form-group">
-        <label for="class_etc">기타 참고사항</label>
-            <input type="text" th:value="${data.class_etc}" id="class_etc" name="class_etc">
-        </div>
-        <div class="form-group">
-        <label for="class_link">수업 참고링크</label>
-            <input type="text" th:value="${data.class_link}" id="class_link" name="class_link">
-        </div>
-        <div class="form-group">
-        <label for="univ_master">석사 가능여부</label>
-            <input type="radio" id="univ_master" name="univ_master" th:checked="${data.univ_master == 'Y'}" value="Y"><label for="univ_master" style="width:auto; float: none">O</label>
-            <input type="radio" id="univ_master_x" name="univ_master" th:checked="${data.univ_master == 'N'}" value="N"><label for="univ_master_x" style="width: auto; float: none">X</label>        </div>
-        <div class="form-group">
-        <label for="univ_limit">국적제한</label>
-            <input type="text" th:value="${data.univ_limit}" id="univ_limit" name="univ_limit">
-        </div>
-        <div class="form-group">
-        <label for="univ_leave">직전학기 휴학가능여부</label>
-            <input type="radio" id="univ_leave" name="univ_leave" th:checked="${data.univ_leave == 'Y'}" value="Y"><label for="univ_leave" style="width: auto; float: none">O</label>
-            <input type="radio" id="univ_leave_x" name="univ_leave" th:checked="${data.univ_leave == 'N'}" value="N"><label for="univ_leave_x" style="width: auto; float: none">X</label>
-        </div>
-        <div class="form-group">
-        <label for="univ_gpa">gpa</label>
-            <input type="text" th:value="${data.univ_gpa}" id="univ_gpa" name="univ_gpa">
-        </div>
-        <div class="form-group">
-        <label for="univ_toefl_ibt">toefl_ibt</label>
-            <input type="text" th:value="${data.univ_toefl_ibt}" id="univ_toefl_ibt" name="univ_toefl_ibt">
-        </div>
-        <div class="form-group">
-        <label for="univ_toefl_itp">toefl_itp</label>
-            <input type="text" th:value="${data.univ_toefl_itp}" id="univ_toefl_itp" name="univ_toefl_itp">
-        </div>
-        <div class="form-group">
-        <label for="univ_ielts">ielts</label>
-            <input type="text" th:value="${data.univ_ielts}" id="univ_ielts" name="univ_ielts">
-        </div>
-        <div class="form-group">
-        <label for="univ_toeic">toeic</label>
-            <input type="text" th:value="${data.univ_toeic}" id="univ_toeic" name="univ_toeic">
-        </div>
-        <div class="form-group">
-        <label for="etc">기타</label>
-            <input type="text" th:value="${data.etc}" id="etc" name="etc">
-        </div>
-        <div class="form-group">
-        <label for="program_link">프로그램 참고링크</label>
-            <input type="text" th:value="${data.program_link}" id="program_link" name="program_link">
-        </div>
-        <div class="form-group">
-        <label for="sch_start">개강일</label>
-            <input type="date" th:value="${data.sch_start}" id="sch_start" name="sch_start">
-        </div>
-        <div class="form-group">
-        <label for="sch_end">종강일</label>
-            <input type="date" th:value="${data.sch_end}" id="sch_end" name="sch_end">
-        </div>
-        <div class="form-group">
-        <label for="sch_vacation">방학</label>
-            <input type="text" th:value="${data.sch_vacation}" id="sch_vacation" name="sch_vacation">
-        </div>
-        <div class="form-group">
-        <label for="sch_nomi_end">노미네이션 마감일</label>
-            <input type="date" th:value="${data.sch_nomi_end}" id="sch_nomi_end" name="sch_nomi_end">
-        </div>
-        <div class="form-group">
-        <label for="sch_app_end">어플리케이션 마감일</label>
-            <input type="date" th:value="${data.sch_app_end}" id="sch_app_end" name="sch_app_end">
-        </div>
-        <div class="form-group">
-        <label for="campus_on">기숙사(campus_on)</label>
-        <input type="radio" id="campus_on" name="campus_on" th:checked="${data.campus_on == 'Y'}" value="Y"><label for="campus_on" style="width: auto; float: none">O</label>
-        <input type="radio" id="campus_on_x" name="campus_on" th:checked="${data.campus_on == 'N'}" value="N"><label for="campus_on_x" style="width: auto; float: none">X</label>
-        </div>
-        <div class="form-group">
-        <label for="campus_off">기숙사(campus_off)</label>
-        <input type="radio" id="campus_off" name="campus_off" th:checked="${data.campus_off == 'Y'}" value="Y"><label for="campus_off" style="width: auto; float: none">O</label>
-        <input type="radio" id="campus_off_x" name="campus_off" th:checked="${data.campus_off == 'N'}" value="N"><label for="campus_off_x" style="width: auto; float: none">X</label>
-        </div>
-    </div>
-        <input class="inst_btn" type="submit" value="등록">
-        <button type="button" onclick="updateData()">수정</button>
-</form>
+
+        </section><!-- End Contact Section -->
+
+        </main><!-- End #main -->
+        <footer th:replace="/footer::footer"></footer>
+
+        <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+        <div id="preloader"></div>
+
+        <!-- Vendor JS Files -->
+        <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+        <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="/assets/vendor/aos/aos.js"></script>
+        <script src="/assets/vendor/php-email-form/validate.js"></script>
+
+        <!-- Template Main JS File -->
+        <script src="/assets/js/main.js"></script>
+
 <script>
     function updateData() {
         document.getElementById('dtlForm').action = '/updateDtl.do';

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
   <meta charset="utf-8">
@@ -47,6 +47,24 @@
     tr:hover {
       background-color: #ddd;
     }
+    p{
+      font-size: larger;
+    }
+    .hidden {
+      display: none;
+    }
+    .arrow {
+      cursor: pointer;
+      font-size: 24px;
+      display: inline-block;
+      float : right;
+    }
+    .arrow.up {
+        transform: rotate(180deg);
+    }
+    sch_btn {
+        float: right;
+    }
   </style>
 </head>
 
@@ -64,7 +82,7 @@
           <div class="row d-flex justify-content-center">
             <div class="col-lg-6 text-center">
               <h2>카테고리별 대학 검색</h2>
-              <p>어쩌구 저쩌구</p>
+              <p>본인이 고려하는 사항의 선택여부에 적합한 대학을 볼 수 있습니다.</br>하단 검색필터를 적용해보세요.</p>
             </div>
           </div>
         </div>
@@ -81,22 +99,57 @@
 
     <!-- ======= Featured Services Section ======= -->
       <div class="container">
-        <div class="tab_sch">
-          <form name="frmSrch" method="post" onsubmit="return true" action="">
+        <div class="arrow" onclick="toggleSearch(this)">▼</div>
+        <div class="tab_sch hidden" id="searchForm">
+        <form name="frmSrch" method="post" onsubmit="return true" action="">
             <input type="text" name="search" th:value="${searchKeyword}" class="sch_txt" placeholder="대학명"/>
+
             <span>국가 선택:</span>
             <select name="univ_country" class="univ_country">
               <option value="">전체</option>
               <option th:each="country : ${countryList}" th:value="${country.univ_country}" th:text="${country.univ_country}"
                       th:selected="${country.univ_country == s_country}"></option>
             </select>
-            <span>언어 선택:</span>
+
+            <span>지역 선택:</span>
             <select name="univ_lang" class="univ_lang">
               <option value="">전체</option>
               <option th:each="lang : ${langList}" th:value="${lang.univ_lang}" th:text="${lang.univ_lang}"
                       th:selected="${lang.univ_lang == s_lang}"></option>
             </select>
-            <input type="button" value="검색" class="sch_btn" onclick="srch()" />
+
+            <span>기숙사 여부:</span>
+            <select name="campus_location" class="campus_location" onchange="updateLocation(this)">
+              <option value="">전체</option>
+              <option value="campus_on" th:selected="${mVO.getCampus_on() == 'Y'}">캠퍼스 내부</option>
+              <option value="campus_off" th:selected="${mVO.getCampus_off() == 'Y'}">캠퍼스 외부</option>
+            </select>
+            <input type="hidden" name="campus_on" value="" id="campusOn">
+            <input type="hidden" name="campus_off" value="" id="campusOff">
+
+            <span>석사 가능여부:</span>
+            <select name="univ_master" class="univ_master">
+              <option value="">전체</option>
+              <option value="Y" th:selected="${mVO.univ_master == 'Y'}">가능</option>
+              <option value="N" th:selected="${mVO.univ_master == 'N'}">불가능</option>
+            </select>
+
+            <span>어학수업 제공 여부</span>
+            <select name="univ_eng" class="univ_eng">
+              <option value="">전체</option>
+              <option value="Y" th:selected="${mVO.getUniv_eng() == 'Y'}">제공</option>
+              <option value="N" th:selected="${mVO.getUniv_eng()== 'N'}">미제공</option>
+            </select>
+
+            <span>학제</span>
+            <select name="univ_score" class="univ_score">
+              <option value="">전체</option>
+              <option value="Quarter" th:selected="${mVO.getUniv_score() == 'Quarter'}">4학기제</option>
+              <option value="Trimester" th:selected="${mVO.getUniv_score() == 'Trimester'}">3학기제</option>
+              <option value="Semester" th:selected="${mVO.getUniv_score() == 'Semester'}">2학기제</option>
+            </select>
+
+            <input type="button" value="검색" class="sch_btn" style="float:right;" onclick="srch()" />
           </form>
         </div>
         <table style="height: 600px;">
@@ -153,11 +206,20 @@
     let searchValue = document.querySelector(".sch_txt").value;
     let univ_country = document.querySelector('select[name="univ_country"]').value;
     // let univ_country = document.querySelector(".univ_country").value;
-    console.log(univ_country);
+    let campus_on = document.querySelector('input[name="campus_on"]').value;
+    let campus_off = document.querySelector('input[name="campus_off"]').value;
+    let univ_master = document.querySelector('select[name="univ_master"]').value;
+    let univ_eng = document.querySelector('select[name="univ_eng"]').value;
+    let univ_score = document.querySelector('select[name="univ_score"]').value;
 
     let form = document.querySelector('form[name="frmSrch"]');
     form.querySelector('input[name="search"]').value = searchValue;
     form.querySelector('select[name="univ_country"]').value = univ_country;
+    form.querySelector('input[name="campus_on"]').value = campus_on;
+    form.querySelector('input[name="campus_off"]').value = campus_off;
+    form.querySelector('select[name="univ_master"]').value = univ_master;
+    form.querySelector('select[name="univ_eng"]').value = univ_eng;
+    form.querySelector('select[name="univ_score"]').value = univ_score;
 
     form.action="/services.do"
     form.submit();
@@ -172,6 +234,11 @@
     let searchValue = document.querySelector(".sch_txt").value;
     let univ_country = document.querySelector('select[name="univ_country"]').value;
     let univ_lang = document.querySelector('select[name="univ_lang"]').value;
+    let campus_on = document.querySelector('input[name="campus_on"]').value;
+    let campus_off = document.querySelector('input[name="campus_off"]').value;
+    let univ_master = document.querySelector('select[name="univ_master"]').value;
+    let univ_eng = document.querySelector('select[name="univ_eng"]').value;
+    let univ_score = document.querySelector('select[name="univ_score"]').value;
 
     let searchInput = document.createElement("input");
     searchInput.type = "hidden";
@@ -183,15 +250,45 @@
     countryInput.name = "univ_country";
     countryInput.value = univ_country;
 
-    console.log(univ_country);
     let langInput = document.createElement("input");
     langInput.type = "hidden";
     langInput.name = "univ_lang";
     langInput.value = univ_lang;
 
+    let campusOn = document.createElement("input");
+    campusOn.type = "hidden";
+    campusOn.name = "campus_on";
+    campusOn.value = campus_on;
+
+    let campusOff = document.createElement("input");
+    campusOff.type = "hidden";
+    campusOff.name = "campus_off";
+    campusOff.value = campus_off;
+
+    let univMaster = document.createElement("input");
+    univMaster.type = "hidden";
+    univMaster.name = "univ_master";
+    univMaster.value = univ_master;
+
+    let univEng = document.createElement("input");
+    univEng.type = "hidden";
+    univEng.name = "univ_eng";
+    univEng.value = univ_eng;
+
+    let univScore = document.createElement("input");
+    univScore.type = "hidden";
+    univScore.name = "univ_score";
+    univScore.value = univ_score;
+
     form.appendChild(searchInput);
     form.appendChild(countryInput);
     form.appendChild(langInput);
+    form.appendChild(campusOn);
+    form.appendChild(campusOff);
+    form.appendChild(univMaster);
+    form.appendChild(univEng);
+    form.appendChild(univScore);
+
     let pageNoInput = document.createElement("input");
     pageNoInput.type = "hidden";
     pageNoInput.name = "pg";
@@ -211,7 +308,30 @@
     document.body.appendChild(form);
     form.submit();
   }
+  function updateLocation(select) {
+    let value = select.value;
+    if (value === "campus_on") {
+      document.getElementById('campusOn').value = "Y";
+      document.getElementById('campusOff').value = "";
+    } else if (value === "campus_off") {
+      document.getElementById('campusOn').value = "";
+      document.getElementById('campusOff').value = "Y";
+    } else {
+      document.getElementById('campusOn').value = "";
+      document.getElementById('campusOff').value = "";
+    }
+  }
 
+  function toggleSearch(element) {
+    let searchForm = document.getElementById('searchForm');
+    if (searchForm.classList.contains('hidden')) {
+      searchForm.classList.remove('hidden');
+    } else {
+      searchForm.classList.add('hidden');
+    }
+      element.classList.toggle('up'); // 'up' 클래스를 토글합니다.
+      element.textContent = element.classList.contains('up') ? '▲' : '▼'; // 화살표 텍스트 변경
+  }
 </script>
 
 </body>

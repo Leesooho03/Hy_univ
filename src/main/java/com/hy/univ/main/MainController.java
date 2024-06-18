@@ -22,10 +22,10 @@ public class MainController {
         String s_country = request.getParameter("univ_country");
         String s_lang = request.getParameter("univ_lang");
 
-        int totalUniv = mainService.getUnivTotal(searchKeyword, s_country, s_lang);
+        int totalUniv = mainService.getUnivTotal(searchKeyword, s_country, s_lang, mVO);
         int totalPageCount = (int) Math.ceil((double) totalUniv / recordCountPerPage);
         int startIdx = (pg - 1) * recordCountPerPage;
-        List<MainVO> univList = mainService.getUnivList(startIdx,recordCountPerPage, searchKeyword, s_country, s_lang);
+        List<MainVO> univList = mainService.getUnivList(startIdx,recordCountPerPage, searchKeyword, s_country, s_lang, mVO);
 
         model.addAttribute("univList", univList);
         model.addAttribute("totalUniv", totalUniv);
@@ -77,10 +77,10 @@ public class MainController {
         String s_country = request.getParameter("univ_country");
         String s_lang = request.getParameter("univ_lang");
 
-        int totalUniv = mainService.getUnivTotal(searchKeyword, s_country, s_lang);
+        int totalUniv = mainService.getUnivTotal(searchKeyword, s_country, s_lang, mVO);
         int totalPageCount = (int) Math.ceil((double) totalUniv / recordCountPerPage);
         int startIdx = (pg - 1) * recordCountPerPage;
-        List<MainVO> univList = mainService.getUnivList(startIdx,recordCountPerPage, searchKeyword, s_country, s_lang);
+        List<MainVO> univList = mainService.getUnivList(startIdx,recordCountPerPage, searchKeyword, s_country, s_lang, mVO);
 
 
         model.addAttribute("s_country", s_country);
@@ -94,6 +94,7 @@ public class MainController {
         model.addAttribute("searchKeyword", searchKeyword);
         model.addAttribute("countryList", countryList);
         model.addAttribute("langList", lang_list);
+        model.addAttribute("mVO", mVO);
         return "services";
     }
 
@@ -110,10 +111,10 @@ public class MainController {
         String s_country = request.getParameter("univ_country");
         String s_lang = request.getParameter("univ_lang");
 
-        int totalUniv = mainService.getUnivTotal(searchKeyword, s_country, s_lang);
+        int totalUniv = mainService.getUnivTotal(searchKeyword, s_country, s_lang, mVO);
         int totalPageCount = (int) Math.ceil((double) totalUniv / recordCountPerPage);
         int startIdx = (pg - 1) * recordCountPerPage;
-        List<MainVO> univList = mainService.getUnivList(startIdx,recordCountPerPage, searchKeyword, s_country, s_lang);
+        List<MainVO> univList = mainService.getUnivList(startIdx,recordCountPerPage, searchKeyword, s_country, s_lang, mVO);
 
         model.addAttribute("univList", univList);
         model.addAttribute("totalUniv", totalUniv);
@@ -123,5 +124,4 @@ public class MainController {
         model.addAttribute("recordCountPerPage", recordCountPerPage);
         return "UnivList_1";
     }
-
 }

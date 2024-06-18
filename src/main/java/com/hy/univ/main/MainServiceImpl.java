@@ -11,13 +11,13 @@ public class MainServiceImpl implements MainService {
     private MainDAO mainDAO;
 
     @Override
-    public List<MainVO> getUnivList(int startIdx, int recordCountPerPage, String searchKeyword, String s_country, String s_lang){
-        return mainDAO.getUnivList(startIdx, recordCountPerPage, searchKeyword, s_country, s_lang);
+    public List<MainVO> getUnivList(int startIdx, int recordCountPerPage, String searchKeyword, String s_country, String s_lang, MainVO mVO){
+        return mainDAO.getUnivList(startIdx, recordCountPerPage, searchKeyword, s_country, s_lang, mVO);
     }
 
     @Override
-    public int getUnivTotal(String searchKeyword, String s_country, String s_lang) {
-        return mainDAO.getUnivTotal(searchKeyword, s_country, s_lang);
+    public int getUnivTotal(String searchKeyword, String s_country, String s_lang, MainVO mVO) {
+        return mainDAO.getUnivTotal(searchKeyword, s_country, s_lang, mVO);
     }
 
     @Override
@@ -28,5 +28,10 @@ public class MainServiceImpl implements MainService {
     @Override
     public List<MainVO> getLang() {
         return mainDAO.getLang();
+    }
+
+    @Override
+    public MainVO getSimple(String name) {
+        return mainDAO.getSimple(name);
     }
 }
